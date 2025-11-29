@@ -6,14 +6,20 @@
 <style>
 .two-columns {
   display: flex;
-  flex-wrap: wrap;
+  /* keep columns on a single row on desktop so each column can stretch to full height */
+  flex-wrap: nowrap;
   gap: 2rem;
   width: 100%;
+  height: 100%;
+  align-items: stretch;
 }
 .column {
   flex: 1 1 0;
   min-width: 250px;
   max-width: 50%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 @media (max-width: 800px) {
   .two-columns {
@@ -29,9 +35,6 @@
 <div class="two-columns">
   <div class="column">
     <slot name="left" />
-  </div>
-  <div class="column">
-    <slot name="middle" />
   </div>
   <div class="column">
     <slot name="right" />

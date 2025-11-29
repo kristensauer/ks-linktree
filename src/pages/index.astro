@@ -5,9 +5,9 @@ import Container from "@components/Container.astro";
 import { Content as SampleMarkdown } from "@content/sample-markdown.md";
 import { Image } from "astro:assets";
 import TwoColumns from "@components/TwoColumns.astro";
-import portfolio from "@components/portfolio.astro";
-import resume from "@components/resume.astro";
-import contact from "@components/contact.astro";
+import portfolio from "@src/pages/portfolio.astro";
+import resume from "@src/pages/resume.astro";
+import contact from "@src/pages/contact.astro";
 ---
 
 <Layout title="Astro Starter">
@@ -46,10 +46,11 @@ import contact from "@components/contact.astro";
 
   .hero-image-container {
     position: relative;
-    text-align: center;
+    object-fit: cover;
+    display: block;
     height: 100%;
     width: 100%;
-    display: block;
+    overflow: hidden;
   }
 
   .hero-image-container img {
@@ -57,13 +58,14 @@ import contact from "@components/contact.astro";
     height: 100%;
     object-fit: cover;
     display: block;
+    overflow: hidden;
   }
 
   .hero-overlay {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 2rem;
+    padding: 1rem;
   }
 
   .hero-title {
@@ -85,7 +87,7 @@ import contact from "@components/contact.astro";
     padding: 0.6rem 1.2rem;
     text-decoration: none;
     border-radius: 6px;
-    transition: background-color 0.2s ease, transform 0.12s ease;
+    transition: background-color 0.75s ease, transform 3.0s ease;
     display: inline-block;
     width: 100%;
     max-width: 280px;
@@ -100,30 +102,5 @@ import contact from "@components/contact.astro";
     text-align: center;
     padding: 1rem;
     font-size: 0.9rem;
-  }
-
-  /* Mobile fallback: don't force header viewport height on small screens */
-  @media (max-width: 800px) {
-    header {
-      height: auto;
-      min-height: 0;
-      padding-top: 2rem;
-      padding-bottom: 2rem;
-    }
-
-    .hero-title {
-      font-size: 2.25rem;
-      text-align: center;
-    }
-
-    .hero-overlay {
-      position: static;
-      transform: none;
-      left: auto;
-      top: auto;
-      padding: 1rem;
-      align-items: center;
-      text-align: center;
-    }
   }
 </style>
