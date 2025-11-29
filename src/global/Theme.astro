@@ -15,8 +15,6 @@ import '@fontsource/freeman';
     --font-body: "Freeman", sans-serif;
     --font-headings: "Freeman", sans-serif;
 
-    font-size: 16px;
-
     --size-page-width: 800px;
     --size-page-padding: 1rem;
   }
@@ -26,22 +24,21 @@ import '@fontsource/freeman';
     color: var(--color-text);
     font-family: var(--font-body);
   }
-    /* Ensure the root and main container can expand to viewport height when needed */
+
     html,
     body,
     #main-content {
       height: 100%;
     }
-  h1,
+  h1 {
+    color: var(--color-header);
+    font-size: 2rem;
+  }
   h2,
   h3,
   h4,
   h5,
   h6 {
     color: var(--color-header);
-  }
-
-  p {
-    color: var(--color-text);
   }
 </style>
