@@ -9,4 +9,21 @@ import Layout from "@layouts/Layout.astro";
             <p>Replace this content with your portfolio items or component markup.</p>
         </div>
     </section>
+    <button id="theme-toggle">🌙</button>
+    <div class="link card">Instagram</div>
+    <div class="link card">LinkedIn</div>
+    <div class="link card">Resume</div>
 </Layout>
+<style>
+    .card {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
+
+.card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+</style>

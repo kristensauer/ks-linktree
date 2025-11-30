@@ -4,6 +4,28 @@
 import '@fontsource/freeman';
 ---
 
+<script>
+// Load saved theme immediately
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark");
+}
+
+// Set up toggle button
+const toggle = document.getElementById("theme-toggle");
+if (toggle) {
+  toggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+
+    // Save preference
+    const isDark = document.body.classList.contains("dark");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+    
+    // Update button icon
+    toggle.textContent = isDark ? "☀️" : "🌙";
+  });
+}
+</script>
+
 <style is:global>
   :root {
     --color-background: #9E9B92;
@@ -19,10 +41,19 @@ import '@fontsource/freeman';
     --size-page-padding: 1rem;
   }
 
+  .dark {
+    --color-background: #1a1a1a;
+    --color-header: #f5f5f5;
+    --color-text: #e0e0e0;
+    --color-box: #2d2d2d;
+    --color-accent: #4db8d8;
+  }
+
   body {
-    background-color: var(--color-background);
+    background: var(--color-background);
     color: var(--color-text);
     font-family: var(--font-body);
+    transition: background .3s, color .3s;
   }
 
     html,
