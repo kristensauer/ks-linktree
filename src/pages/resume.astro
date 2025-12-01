@@ -1,7 +1,8 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import ResumeImage from "../assets/Resume.pdf";
 import Nav from "@components/Nav.astro";
+import Resume from '@assets/images/Resume.png';
+import { Image } from 'astro:assets';
 ---
 
 <Layout title="Resume">
@@ -9,10 +10,10 @@ import Nav from "@components/Nav.astro";
     <canvas id="particle-canvas"></canvas>
     <section id="resume" class="resume-section">
         <div class="container">
-          <img src="src/assets/images/Resume.pdf" alt="Resume Image" />
+          <Image src={Resume} alt="Resume" />
         </div>
 </Layout>
-
+    </section>
 <style>
 .resume-section {
     position: relative;

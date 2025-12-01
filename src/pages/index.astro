@@ -7,6 +7,7 @@ import { Image } from "astro:assets";
 import TwoColumns from "@components/TwoColumns.astro";
 import portfolio from "@src/pages/portfolio.astro";
 import resume from "@src/pages/resume.astro";
+import Kristen from '@assets/images/Kristen.png';
 ---
 <script>
   // Typing animation
@@ -109,7 +110,7 @@ import resume from "@src/pages/resume.astro";
 <header class="hero-section">
   <div class="hero-container">
     <div class="hero-left">
-      <img src="src/assets/images/kristensauer-sp25.png" alt="Kristen Sauer headshot" class="hero-image" />
+      <Image src={Kristen} alt="Kristen Sauer headshot" class="hero-image" />
       <div class="social-icons">
         <a href="https://www.instagram.com/kristenandreasauer/" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
           <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32">
@@ -132,7 +133,7 @@ import resume from "@src/pages/resume.astro";
         <h2 id="typing"></h2>
         <nav class="nav-buttons">
           <a class="nav-btn" href="/portfolio">Portfolio</a>
-          <a class="nav-btn" href="/resume">Resume</a>
+          <a class="nav-btn" href="/Kristen-Sauer-Resume.pdf">Resume</a>
           <a class="nav-btn" href="https://forms.cloud.microsoft/r/vLE9KiRnyr" target="_blank" rel="noopener noreferrer">Contact</a>
         </nav>
       </div>

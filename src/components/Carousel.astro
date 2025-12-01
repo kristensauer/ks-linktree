@@ -1,29 +1,25 @@
 ---
 // Props: images: Array<{ src: string; alt?: string }>
-const { images = [] } = Astro.props;
+
+import { Image } from 'astro:assets';
+import FF from '@assets/images/FF.png';
+import Stickers from '@assets/images/Stickers.png';
+import Symposium from '@assets/images/Symposium.png';
 ---
 
 <div class="carousel" aria-label="Image carousel">
   <div class="carousel-track">
-    {images.length > 0 ? (
-      images.map((img) => (
+ 
         <figure class="carousel-item">
-          <img src={img.src} alt={img.alt ?? "Portfolio image"} loading="lazy" />
-        </figure>
-      ))
-    ) : (
-      <>
-        <figure class="carousel-item">
-          <img src="src/assets/images/DayOfinsta-9-25.png" alt="Placeholder A" loading="lazy" />
+          <Image src={FF} alt="Fighting Fascism Flyer" loading="lazy" />
         </figure>
         <figure class="carousel-item">
-          <img src="src/assets/images/stickers-10.11.png" alt="Placeholder B" loading="lazy" />
+          <Image src={Stickers} alt="Three SUNY New Paltz Art History Department Stickers" loading="lazy" />
         </figure>
         <figure class="carousel-item">
-          <img src="src/assets/images/SymposiumSticker Logo March 31, 2025 at 13.59.50.pdf" alt="Placeholder C" loading="lazy" />
+          <Image src={Symposium} alt="SUNY New Paltz Undergraduate Art History Symposium 2025 Sticker" loading="lazy" />
         </figure>
-      </>
-    )}
+   
   </div>
   <div class="carousel-controls">
     <button class="ctrl prev" aria-label="Previous" onclick="this.closest('.carousel').querySelector('.carousel-track').scrollBy({left: -window.innerWidth * 0.8, behavior: 'smooth'})">‹</button>
