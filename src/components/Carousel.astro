@@ -14,13 +14,13 @@ const { images = [] } = Astro.props;
     ) : (
       <>
         <figure class="carousel-item">
-          <img src="https://picsum.photos/seed/a/1200/800" alt="Placeholder A" loading="lazy" />
+          <img src="src/assets/images/DayOfinsta-9-25.png" alt="Placeholder A" loading="lazy" />
         </figure>
         <figure class="carousel-item">
-          <img src="https://picsum.photos/seed/b/1200/800" alt="Placeholder B" loading="lazy" />
+          <img src="src/assets/images/stickers-10.11.png" alt="Placeholder B" loading="lazy" />
         </figure>
         <figure class="carousel-item">
-          <img src="https://picsum.photos/seed/c/1200/800" alt="Placeholder C" loading="lazy" />
+          <img src="src/assets/images/SymposiumSticker Logo March 31, 2025 at 13.59.50.pdf" alt="Placeholder C" loading="lazy" />
         </figure>
       </>
     )}
@@ -61,11 +61,19 @@ const { images = [] } = Astro.props;
     border-radius: 12px;
     overflow: hidden;
     background: var(--color-box);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: clamp(320px, 60vh, 720px);
+    padding: 1rem;
   }
   .carousel-item img {
     display: block;
-    width: 100%;
+    max-width: 90vw;
+    max-height: 90vh;
+    width: auto;
     height: auto;
+    object-fit: contain;
   }
   .carousel-controls {
     position: absolute;
@@ -78,8 +86,8 @@ const { images = [] } = Astro.props;
   }
   .ctrl {
     pointer-events: auto;
-    background: rgba(0,0,0,0.35);
-    color: #fff;
+    background: var(--color-accent);
+    color: var(--color-text);
     border: none;
     border-radius: 999px;
     width: 40px;
@@ -90,7 +98,10 @@ const { images = [] } = Astro.props;
     cursor: pointer;
     transition: transform 0.2s ease;
   }
-  .ctrl:hover { transform: scale(1.06); }
+  .ctrl:hover { 
+    transform: scale(1.06); 
+    background-color: var(--color-header);
+  }
 
   @media (max-width: 768px) {
     .carousel-track {

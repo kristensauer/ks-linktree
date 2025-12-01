@@ -6,24 +6,12 @@ import Carousel from "@components/Carousel.astro";
 
 <Layout title="Portfolio">
     <Nav />
-    <section id="portfolio" class="portfolio-section">
-        <div class="container">
-            <h2>Portfolio</h2>
-            <p>Scroll to snap between items. Replace the placeholders with your images.</p>
-        </div>
-        <Carousel />
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+    <section class="portfolio-section">
+      <Carousel />
+    </section>
 </Layout>
 <style>
-.card {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.6s ease;
-}
-
-.card.show {
-  opacity: 1;
-  transform: translateY(0);
-}
 
 #particle-canvas {
   position: fixed;
@@ -42,17 +30,17 @@ import Carousel from "@components/Carousel.astro";
 </style>
 
 <script>
-  const canvas = document.getElementById("particle-canvas") as HTMLCanvasElement;
+  // @ts-nocheck
+  const canvas = document.getElementById("particle-canvas");
   if (canvas) {
     const ctx = canvas.getContext("2d");
     if (ctx) {
-      let particles: any[] = [];
+      let particles = [];
       const particleCount = 60;
       const maxSpeed = 0.5;
       const lineDistance = 130;
 
       function resizeCanvas() {
-        if (!canvas) return;
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
       }
@@ -60,7 +48,7 @@ import Carousel from "@components/Carousel.astro";
       window.addEventListener("resize", resizeCanvas);
       resizeCanvas();
 
-      function Particle(this: any) {
+      function Particle() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
         this.vx = (Math.random() - 0.5) * maxSpeed;
@@ -85,8 +73,7 @@ import Carousel from "@components/Carousel.astro";
         ctx.translate(this.x, this.y);
         ctx.rotate(this.rotation);
         ctx.fillStyle = `rgba(255,255,255,${this.opacity})`;
-        
-        // Draw star shape
+
         ctx.beginPath();
         for (let i = 0; i < 5; i++) {
           const angle = (i * 4 * Math.PI) / 5;
@@ -102,7 +89,7 @@ import Carousel from "@components/Carousel.astro";
       };
 
       for (let i = 0; i < particleCount; i++) {
-        particles.push(new (Particle as any)());
+        particles.push(new Particle());
       }
 
       function animate() {
