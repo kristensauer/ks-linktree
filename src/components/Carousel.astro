@@ -1,0 +1,100 @@
+---
+// Props: images: Array<{ src: string; alt?: string }>
+const { images = [] } = Astro.props;
+---
+
+<div class="carousel" aria-label="Image carousel">
+  <div class="carousel-track">
+    {images.length > 0 ? (
+      images.map((img) => (
+        <figure class="carousel-item">
+          <img src={img.src} alt={img.alt ?? "Portfolio image"} loading="lazy" />
+        </figure>
+      ))
+    ) : (
+      <>
+        <figure class="carousel-item">
+          <img src="https://picsum.photos/seed/a/1200/800" alt="Placeholder A" loading="lazy" />
+        </figure>
+        <figure class="carousel-item">
+          <img src="https://picsum.photos/seed/b/1200/800" alt="Placeholder B" loading="lazy" />
+        </figure>
+        <figure class="carousel-item">
+          <img src="https://picsum.photos/seed/c/1200/800" alt="Placeholder C" loading="lazy" />
+        </figure>
+      </>
+    )}
+  </div>
+  <div class="carousel-controls">
+    <button class="ctrl prev" aria-label="Previous" onclick="this.closest('.carousel').querySelector('.carousel-track').scrollBy({left: -window.innerWidth * 0.8, behavior: 'smooth'})">‹</button>
+    <button class="ctrl next" aria-label="Next" onclick="this.closest('.carousel').querySelector('.carousel-track').scrollBy({left: window.innerWidth * 0.8, behavior: 'smooth'})">›</button>
+  </div>
+</div>
+
+<style>
+  .carousel {
+    position: relative;
+    width: min(100%, 1200px);
+    margin: 2rem auto;
+  }
+  .carousel-track {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 100%;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+  .carousel-track::-webkit-scrollbar {
+    height: 8px;
+  }
+  .carousel-track::-webkit-scrollbar-thumb {
+    background: var(--color-accent);
+    border-radius: 8px;
+  }
+  .carousel-item {
+    scroll-snap-align: center;
+    margin: 0;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--color-box);
+  }
+  .carousel-item img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .carousel-controls {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0.5rem;
+  }
+  .ctrl {
+    pointer-events: auto;
+    background: rgba(0,0,0,0.35);
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  .ctrl:hover { transform: scale(1.06); }
+
+  @media (max-width: 768px) {
+    .carousel-track {
+      grid-auto-columns: 100%;
+    }
+  }
+</style>

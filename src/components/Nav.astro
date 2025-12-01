@@ -1,0 +1,98 @@
+---
+// Navigation component for internal pages
+---
+
+<nav class="page-nav">
+  <div class="nav-center">
+    <a href="/" class="nav-link">Home</a>
+    <a href="/portfolio" class="nav-link">Portfolio</a>
+    <a href="/resume" class="nav-link">Resume</a>
+    <a href="https://forms.cloud.microsoft/r/vLE9KiRnyr" class="nav-link" target="_blank" rel="noopener noreferrer">Contact</a>
+  </div>
+  <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">🌙</button>
+</nav>
+
+<style>
+  .page-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2rem;
+    background: var(--color-box);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid var(--color-accent);
+    z-index: 1000;
+  }
+
+  .nav-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+  }
+
+  .nav-link {
+    color: var(--color-text);
+    text-decoration: none;
+    font-family: var(--font-headings);
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .nav-link:hover {
+    background: var(--color-accent);
+    color: var(--color-text);
+    transform: scale(1.05);
+    transition: all 0.75s ease;
+  }
+
+  :global(body) {
+    padding-top: 80px;
+  }
+
+  @media (max-width: 768px) {
+    .page-nav {
+      padding: 0.75rem 1rem;
+    }
+
+    .nav-center { gap: 1rem; }
+
+    .nav-link {
+      font-size: 0.875rem;
+      padding: 0.4rem 0.75rem;
+    }
+
+    :global(body) {
+      padding-top: 60px;
+    }
+  }
+
+  .theme-toggle {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: 2px solid var(--color-accent);
+    color: var(--color-text);
+    border-radius: 8px;
+    padding: 0.4rem 0.6rem;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+
+  .theme-toggle:hover {
+    background: var(--color-accent);
+    color: var(--color-background);
+  }
+</style>

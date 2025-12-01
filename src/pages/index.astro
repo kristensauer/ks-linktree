@@ -7,8 +7,103 @@ import { Image } from "astro:assets";
 import TwoColumns from "@components/TwoColumns.astro";
 import portfolio from "@src/pages/portfolio.astro";
 import resume from "@src/pages/resume.astro";
-import contact from "@src/pages/contact.astro";
 ---
+<script>
+  // Typing animation
+  const text = "Designer. Creative. Student.";
+  const speed = 80;
+  let index = 0;
+
+  function type() {
+    const typingEl = document.getElementById("typing");
+    if (index < text.length && typingEl) {
+      typingEl.innerHTML += text[index];
+      index++;
+      setTimeout(type, speed);
+    }
+  }
+
+  type();
+
+  // Particle animation - wait for DOM
+  const canvas = document.getElementById("particle-canvas") as HTMLCanvasElement;
+  if (canvas) {
+    const ctx = canvas.getContext("2d");
+    if (ctx) {
+      let particles: any[] = [];
+      const particleCount = 60;
+      const maxSpeed = 0.5;
+      const lineDistance = 130;
+
+      function resizeCanvas() {
+        if (!canvas) return;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+
+      window.addEventListener("resize", resizeCanvas);
+      resizeCanvas();
+
+      function Particle(this: any) {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * maxSpeed;
+        this.vy = (Math.random() - 0.5) * maxSpeed;
+        this.size = Math.random() * 15 + 10;
+        this.rotation = Math.random() * Math.PI * 2;
+        this.rotationSpeed = (Math.random() - 0.5) * 0.02;
+        this.opacity = Math.random() * 0.4 + 0.3;
+      }
+
+      Particle.prototype.update = function () {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.rotation += this.rotationSpeed;
+
+        if (this.x < -this.size || this.x > canvas.width + this.size) this.vx *= -1;
+        if (this.y < -this.size || this.y > canvas.height + this.size) this.vy *= -1;
+      };
+
+      Particle.prototype.draw = function () {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        ctx.fillStyle = `rgba(255,255,255,${this.opacity})`;
+        
+        // Draw star shape
+        ctx.beginPath();
+        for (let i = 0; i < 5; i++) {
+          const angle = (i * 4 * Math.PI) / 5;
+          const radius = i % 2 === 0 ? this.size : this.size / 2.5;
+          const x = Math.cos(angle) * radius;
+          const y = Math.sin(angle) * radius;
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      };
+
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new (Particle as any)());
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        particles.forEach(p => {
+          p.update();
+          p.draw();
+        });
+
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    }
+  }
+</script>
 
 <Layout title="Kristen Sauer">
 <header class="hero-section">
@@ -31,13 +126,14 @@ import contact from "@src/pages/contact.astro";
     </div>
     
     <div class="hero-right">
+      <canvas id="particle-canvas"></canvas>
       <div class="hero-right-content">
         <h1 class="hero-title">KRISTEN SAUER</h1>
-        <h2 class="hero-subtitle">Designer. Creative. Student.</h2>
+        <h2 id="typing"></h2>
         <nav class="nav-buttons">
-          <a class="nav-btn nav-btn-primary" href="/portfolio">Portfolio</a>
+          <a class="nav-btn" href="/portfolio">Portfolio</a>
           <a class="nav-btn" href="/resume">Resume</a>
-          <a class="nav-btn" href="/contact">Contact</a>
+          <a class="nav-btn" href="https://forms.cloud.microsoft/r/vLE9KiRnyr" target="_blank" rel="noopener noreferrer">Contact</a>
         </nav>
       </div>
       <footer class="footer">
@@ -65,7 +161,7 @@ import contact from "@src/pages/contact.astro";
   .hero-left {
     flex: 1;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     display: flex;
     align-items: flex-end;
   }
@@ -114,6 +210,7 @@ import contact from "@src/pages/contact.astro";
   /* Right side */
   .hero-right {
     flex: 1;
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -122,6 +219,8 @@ import contact from "@src/pages/contact.astro";
   }
 
   .hero-right-content {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -141,7 +240,7 @@ import contact from "@src/pages/contact.astro";
     margin-bottom: -2rem;
   }
 
-  .hero-subtitle {
+  h2 {
     font-size: clamp(1.5rem, 4vw, 2.5rem);
     font-weight: 400;
     color: var(--color-header, #FFFFFF);
@@ -179,6 +278,8 @@ import contact from "@src/pages/contact.astro";
   }
 
   .footer {
+    position: relative;
+    z-index: 1;
     width: 100%;
     text-align: center;
     padding-bottom: 1rem;
@@ -256,4 +357,80 @@ import contact from "@src/pages/contact.astro";
   }
   }
 
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100%;
+  background: var(--color-background); /* fallback */
+}
+
+#particle-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 10;
+}
 </style>
+<script>
+  // Type hints to satisfy TS in Astro
+  /** @type {Window & typeof globalThis & { confetti?: (opts?: any) => void }} */
+  const _w = window;
+  // Lightweight confetti using canvas-confetti CDN or fallback
+  (function(){
+    /** @param {() => void} cb */
+    function loadConfetti(cb){
+      // @ts-ignore - confetti injected by CDN
+      if (_w.confetti) return cb();
+      const s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js';
+      s.onload = cb;
+      document.head.appendChild(s);
+    }
+
+    /** @type {(el: HTMLElement) => void} */
+    const fireConfettiFromElement = (el) => {
+      const rect = el.getBoundingClientRect();
+      const x = (rect.left + rect.width/2) / window.innerWidth;
+      const y = (rect.top + rect.height/2) / window.innerHeight;
+      // @ts-ignore - confetti injected by CDN
+      _w.confetti && _w.confetti({
+        particleCount: 80,
+        startVelocity: 35,
+        spread: 60,
+        origin: { x, y },
+        ticks: 200
+      });
+    }
+
+    function attachHandlers(){
+      document.querySelectorAll('.nav-btn').forEach((a)=>{
+        a.addEventListener('click', (e)=>{
+          // Show confetti first, then navigate programmatically
+          e.preventDefault();
+          const href = a.getAttribute('href');
+          loadConfetti(()=>fireConfettiFromElement(a));
+          setTimeout(()=>{
+            if (href) window.location.href = href;
+          }, 1200);
+        });
+      });
+    }
+
+    // Ensure DOM ready
+    if (document.readyState === 'loading'){
+      document.addEventListener('DOMContentLoaded', attachHandlers);
+    } else {
+      attachHandlers();
+    }
+  })();
+</script>
